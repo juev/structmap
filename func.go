@@ -6,8 +6,6 @@ import (
 	"strings"
 )
 
-// TODO: add tests for functions
-
 // StructToMap converts structure to map[string]string
 func StructToMap(str any) map[string]string {
 	val := reflect.ValueOf(str)
@@ -59,7 +57,7 @@ func MapToStruct(mmap map[string]string, s any) any {
 
 	}
 
-	return result
+	return result.Interface()
 }
 
 func toTitle(str string) (result string) {
