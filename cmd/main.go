@@ -6,6 +6,8 @@ import (
 	"github.com/juev/structmap"
 )
 
+// TODO: add github actions files for tests and builds
+
 type Str struct {
 	Title   string
 	Body    string
@@ -34,7 +36,6 @@ func run() error {
 	m := structmap.StructToMap(str)
 	fmt.Printf("map: %#v\n", m)
 
-	// fmt.Println("MapToStruct")
 	s := structmap.MapToStruct(m, Str{})
 	fmt.Printf("struct: %#v\n", s)
 	return nil

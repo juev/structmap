@@ -6,6 +6,9 @@ import (
 	"strings"
 )
 
+// TODO: add tests for functions
+
+// StructToMap converts structure to map[string]string
 func StructToMap(str any) map[string]string {
 	val := reflect.ValueOf(str)
 	typ := reflect.TypeOf(str)
@@ -30,12 +33,12 @@ func StructToMap(str any) map[string]string {
 	return result
 }
 
+// MapToStruct converts map[string]string to s structure
 func MapToStruct(mmap map[string]string, s any) any {
 	value := reflect.ValueOf(mmap)
 	result := reflect.New(reflect.TypeOf(s)).Elem()
 	iter := value.MapRange()
 	for iter.Next() {
-		// fmt.Printf("key: %v\nvalue: %v\n", iter.Key(), iter.Value())
 		key := toTitle(iter.Key().String())
 		switch result.FieldByName(key).Kind() {
 		case reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
