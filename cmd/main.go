@@ -6,8 +6,6 @@ import (
 	"github.com/juev/structmap"
 )
 
-// TODO: add github actions files for tests and builds
-
 type Str struct {
 	Title   string
 	Body    string
