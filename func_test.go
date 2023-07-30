@@ -77,12 +77,13 @@ func TestMapToStruct(t *testing.T) {
 		{
 			name: "simple convert",
 			args: args{
-				mmap: map[string]string{"bo": "true", "fl": "12.12", "in": "12", "st": "string_content"},
+				mmap: map[string]string{"bo": "true", "fl": "12.12", "in": "12", "st": "string_content", "uin": "32"},
 				s: struct {
-					St string
-					In int16
-					Fl float32
-					Bo bool
+					St  string
+					In  int16
+					Uin uint32
+					Fl  float32
+					Bo  bool
 				}{},
 			},
 			want: struct {
@@ -102,6 +103,46 @@ func TestMapToStruct(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := MapToStruct(tt.args.mmap, tt.args.s); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("MapToStruct() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_toTitle(t *testing.T) {
+	type args struct {
+		str string
+	}
+	tests := []struct {
+		name       string
+		args       args
+		wantResult string
+	}{
+		{
+			name: "empty",
+			args: args{
+				str: "",
+			},
+			wantResult: "",
+		},
+		{
+			name: "one char",
+			args: args{
+				str: "f",
+			},
+			wantResult: "F",
+		},
+		{
+			name: "word",
+			args: args{
+				str: "false",
+			},
+			wantResult: "False",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if gotResult := toTitle(tt.args.str); gotResult != tt.wantResult {
+				t.Errorf("toTitle() = %v, want %v", gotResult, tt.wantResult)
 			}
 		})
 	}
