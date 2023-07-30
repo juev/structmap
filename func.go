@@ -1,7 +1,6 @@
-package main
+package structmap
 
 import (
-	"fmt"
 	"reflect"
 	"strconv"
 	"strings"
@@ -31,12 +30,12 @@ func StructToMap(str any) map[string]string {
 	return result
 }
 
-func MapToStruct(mmap map[string]string) any {
+func MapToStruct(mmap map[string]string, s any) any {
 	value := reflect.ValueOf(mmap)
-	result := reflect.New(reflect.TypeOf(Str{})).Elem()
+	result := reflect.New(reflect.TypeOf(s)).Elem()
 	iter := value.MapRange()
 	for iter.Next() {
-		fmt.Printf("key: %v\nvalue: %v\n", iter.Key(), iter.Value())
+		// fmt.Printf("key: %v\nvalue: %v\n", iter.Key(), iter.Value())
 		key := toTitle(iter.Key().String())
 		switch result.FieldByName(key).Kind() {
 		case reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:

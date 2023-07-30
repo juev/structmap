@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/juev/structmap"
 )
 
 type Str struct {
@@ -29,11 +31,11 @@ func run() error {
 		B:       true,
 	}
 	fmt.Printf("struct: %#v\n", str)
-	m := StructToMap(str)
+	m := structmap.StructToMap(str)
 	fmt.Printf("map: %#v\n", m)
 
-	fmt.Println("MapToStruct")
-	s := MapToStruct(m)
+	// fmt.Println("MapToStruct")
+	s := structmap.MapToStruct(m, Str{})
 	fmt.Printf("struct: %#v\n", s)
 	return nil
 }
