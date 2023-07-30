@@ -87,15 +87,17 @@ func TestMapToStruct(t *testing.T) {
 				}{},
 			},
 			want: struct {
-				St string
-				In int16
-				Fl float32
-				Bo bool
+				St  string
+				In  int16
+				Uin uint32
+				Fl  float32
+				Bo  bool
 			}{
-				St: "string_content",
-				In: 12,
-				Fl: 12.12,
-				Bo: true,
+				St:  "string_content",
+				In:  12,
+				Uin: 32,
+				Fl:  12.12,
+				Bo:  true,
 			},
 		},
 	}
