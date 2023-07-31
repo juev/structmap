@@ -6,6 +6,7 @@ import (
 )
 
 func TestStructToMap(t *testing.T) {
+	t.Parallel()
 	type args struct {
 		str any
 	}
@@ -56,7 +57,9 @@ func TestStructToMap(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
+		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 			if got := StructToMap(tt.args.str); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("StructToMap() = %v, want %v", got, tt.want)
 			}
@@ -65,6 +68,7 @@ func TestStructToMap(t *testing.T) {
 }
 
 func TestMapToStruct(t *testing.T) {
+	t.Parallel()
 	type args struct {
 		mmap map[string]string
 		s    any
@@ -100,9 +104,37 @@ func TestMapToStruct(t *testing.T) {
 				Bo:  true,
 			},
 		},
+		{
+			name: "parse error",
+			args: args{
+				mmap: map[string]string{"bo": "0", "fl": "asd", "in": "12.12", "st": "string_content", "uin": "32"},
+				s: struct {
+					St  string
+					In  int16
+					Uin uint32
+					Fl  float32
+					Bo  bool
+				}{},
+			},
+			want: struct {
+				St  string
+				In  int16
+				Uin uint32
+				Fl  float32
+				Bo  bool
+			}{
+				St:  "string_content",
+				In:  0,
+				Uin: 32,
+				Fl:  0,
+				Bo:  false,
+			},
+		},
 	}
 	for _, tt := range tests {
+		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 			if got := MapToStruct(tt.args.mmap, tt.args.s); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("MapToStruct() = %v, want %v", got, tt.want)
 			}
@@ -111,6 +143,7 @@ func TestMapToStruct(t *testing.T) {
 }
 
 func Test_toTitle(t *testing.T) {
+	t.Parallel()
 	type args struct {
 		str string
 	}
@@ -142,7 +175,9 @@ func Test_toTitle(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
+		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 			if gotResult := toTitle(tt.args.str); gotResult != tt.wantResult {
 				t.Errorf("toTitle() = %v, want %v", gotResult, tt.wantResult)
 			}
